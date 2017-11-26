@@ -1,4 +1,7 @@
+// author Emmett Byrne
+// date 25-11-17
 #pragma once
+#include <iostream>
 #include <SFML\Graphics.hpp>
 
 struct KeyFrame
@@ -14,20 +17,27 @@ struct KeyFrame
 class AnimateAuthor
 {
 public:
-	AnimateAuthor();
+	AnimateAuthor(sf::Vector2f tPos, sf::Vector2f sPos);
 	~AnimateAuthor();
 
-	void update(); 
+	void update(sf::Time t); 
 	void render(sf::RenderWindow &window);
+
+	void setKeyframe(int key, sf::Time dur, sf::Vector2f tPos, sf::Vector2f sPos);
+
+	bool isPaused();
 
 private:
 	bool m_paused; //Is the animation paused
-	int m_currentKeyFrame; //the current keyframe that is playing
 
+	sf::Font m_font; //Text font being used
 	sf::Text m_title; //The title text
 	sf::Text m_sub; //The Subtext
 
 	sf::Vector2f m_titlePosition; //position of title text
 	sf::Vector2f m_subPosition; //position of sub text
+
+	KeyFrame m_keyframe[3]; //array of all the keyframes
+	int m_currentKeyFrame; //the current keyframe that is playing
 };
 

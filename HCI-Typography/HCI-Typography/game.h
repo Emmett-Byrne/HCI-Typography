@@ -1,8 +1,11 @@
-// author Peter Lowe
+/// author Emmett Byrne
+// date 25-11-17
+
 #ifndef GAME
 #define GAME
 
 #include <SFML/Graphics.hpp>
+#include "AnimateAuthor.h"
 
 class Game
 {
@@ -22,6 +25,8 @@ private:
 	
 	void setupFontAndText();
 	void setupSprite();
+
+	AnimateAuthor m_author;
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message

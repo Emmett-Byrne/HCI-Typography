@@ -1,4 +1,5 @@
-// author Peter Lowe
+/// author Emmett Byrne
+// date 25-11-17
 
 #include "Game.h"
 #include <iostream>
@@ -6,9 +7,14 @@
 
 
 Game::Game() :
-	m_window{ sf::VideoMode{ 800, 600, 32 }, "SFML Game" },
-	m_exitGame{false} //when true game will exit
+	m_window{ sf::VideoMode{ 800, 600, 32 }, "Typography Animation" },
+	m_exitGame{false}, //when true game will exit
+	m_author{ sf::Vector2f{ 900, 270 }, sf::Vector2f{ -100, 320 } }
 {
+	m_author.setKeyframe(0, sf::seconds(.5f), sf::Vector2f(450, 270), sf::Vector2f(350, 320));
+	m_author.setKeyframe(1, sf::seconds(2.0f), sf::Vector2f(350, 270), sf::Vector2f(450, 320));
+	m_author.setKeyframe(2, sf::seconds(.5f), sf::Vector2f(-100, 270), sf::Vector2f(900, 320));
+
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
 }
@@ -71,6 +77,8 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+
+	m_author.update(t_deltaTime);
 }
 
 /// <summary>
@@ -78,9 +86,8 @@ void Game::update(sf::Time t_deltaTime)
 /// </summary>
 void Game::render()
 {
-	m_window.clear(sf::Color::White);
-	m_window.draw(m_welcomeMessage);
-	m_window.draw(m_logoSprite);
+	m_window.clear(sf::Color::Black);
+	m_author.render(m_window);
 	m_window.display();
 }
 
