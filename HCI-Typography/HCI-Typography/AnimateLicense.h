@@ -10,7 +10,7 @@ enum class AnimType
 	somersault
 };
 
-struct KeyFrame
+struct KeyFrameLicense
 {
 	sf::Time m_duration; //How long the keyframe lasts
 	sf::Time m_timePassed; //The amount of time that the keyframe has been playing for
@@ -18,7 +18,7 @@ struct KeyFrame
 	sf::Vector2f m_targetPositionTitle; //The end position of the title for the keyframe
 	sf::Vector2f m_startPositionSub; //The starting position of the subText for the keyframe
 	sf::Vector2f m_targetPositionSub; //The end position of the subText for the keyframe
-	AnimType m_type;
+	AnimType m_type = AnimType::move; //The type of animation
 };
 
 class AnimateLicense
@@ -44,7 +44,10 @@ private:
 	sf::Vector2f m_titlePosition; //position of title text
 	sf::Vector2f m_subPosition; //position of sub text
 
-	KeyFrame m_keyframe[4]; //array of all the keyframes
+	KeyFrameLicense m_keyframe[4]; //array of all the keyframes
 	int m_currentKeyFrame; //the current keyframe that is playing
+
+	void move(sf::Time t);
+	void somersault(sf::Time t);
 };
 

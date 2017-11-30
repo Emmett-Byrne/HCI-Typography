@@ -44,21 +44,13 @@ void AnimateLicense::update(sf::Time t)
 	{
 		if (m_keyframe[m_currentKeyFrame].m_timePassed < m_keyframe[m_currentKeyFrame].m_duration)
 		{
-			sf::Vector2f moveTitle(m_keyframe[m_currentKeyFrame].m_targetPositionTitle - m_keyframe[m_currentKeyFrame].m_startPositionTitle);
-			sf::Vector2f moveSub(m_keyframe[m_currentKeyFrame].m_targetPositionSub - m_keyframe[m_currentKeyFrame].m_startPositionSub);
-
-			float scaler = m_keyframe[m_currentKeyFrame].m_duration.asSeconds() / t.asSeconds();
-			moveTitle /= scaler;
-			moveSub /= scaler;
-
-			m_titlePosition += moveTitle;
-			m_subPosition += moveSub;
+			move(t);
 
 			m_keyframe[m_currentKeyFrame].m_timePassed += t;
 		}
 		else
 		{
-			if (m_currentKeyFrame < 2)
+			if (m_currentKeyFrame < 3)
 			{
 				m_titlePosition = m_keyframe[m_currentKeyFrame].m_targetPositionTitle;
 				m_subPosition = m_keyframe[m_currentKeyFrame].m_targetPositionSub;
@@ -102,4 +94,21 @@ void AnimateLicense::setKeyframe(int key, sf::Time dur, sf::Vector2f tPos, sf::V
 bool AnimateLicense::isPaused()
 {
 	return m_paused;
+}
+
+void AnimateLicense::move(sf::Time t)
+{
+	sf::Vector2f moveTitle(m_keyframe[m_currentKeyFrame].m_targetPositionTitle - m_keyframe[m_currentKeyFrame].m_startPositionTitle);
+	sf::Vector2f moveSub(m_keyframe[m_currentKeyFrame].m_targetPositionSub - m_keyframe[m_currentKeyFrame].m_startPositionSub);
+
+	float scaler = m_keyframe[m_currentKeyFrame].m_duration.asSeconds() / t.asSeconds();
+	moveTitle /= scaler;
+	moveSub /= scaler;
+
+	m_titlePosition += moveTitle;
+	m_subPosition += moveSub;
+}
+
+void AnimateLicense::somersault(sf::Time t)
+{
 }

@@ -6,6 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "AnimateAuthor.h"
+#include "AnimateLicense.h"
 
 class Game
 {
@@ -27,6 +28,7 @@ private:
 	void setupSprite();
 
 	AnimateAuthor m_author;
+	AnimateLicense m_license;
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
