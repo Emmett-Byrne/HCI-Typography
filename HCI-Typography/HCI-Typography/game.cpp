@@ -97,7 +97,7 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 
-	m_producer.update(t_deltaTime);
+	m_splash.update(t_deltaTime);
 }
 
 /// <summary>
@@ -106,7 +106,7 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::Black);
-	m_producer.render(m_window);
+	m_splash.render(m_window);
 	m_window.display();
 }
 

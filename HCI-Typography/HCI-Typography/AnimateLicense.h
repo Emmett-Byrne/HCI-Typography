@@ -18,10 +18,12 @@ struct KeyFrameLicense
 	sf::Vector2f m_targetPositionTitle; //The end position of the title for the keyframe
 	sf::Vector2f m_startPositionSub; //The starting position of the subText for the keyframe
 	sf::Vector2f m_targetPositionSub; //The end position of the subText for the keyframe
-	AnimType m_type = AnimType::move; //The type of animation
-	float grav = 9.8;
-	float InitialVelocity = 0;
+	AnimType m_type; //The type of animation
+	sf::Vector2f grav = sf::Vector2f(0.0f, 9.8f);
+	sf::Vector2f vel;
+	float initialVelocity;
 	float height = 50;
+	float angle = 45;
 };
 
 class AnimateLicense
@@ -32,6 +34,8 @@ public:
 
 	void update(sf::Time t);
 	void render(sf::RenderWindow &window);
+
+	void setupSomersault();
 
 	void setKeyframe(int key, sf::Time dur, sf::Vector2f tPos, sf::Vector2f sPos, AnimType type);
 

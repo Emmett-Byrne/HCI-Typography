@@ -67,6 +67,13 @@ void AnimateLicense::update(sf::Time t)
 				m_keyframe[m_currentKeyFrame + 1].m_startPositionSub = m_keyframe[m_currentKeyFrame].m_targetPositionSub;
 
 				m_currentKeyFrame++;
+
+				if (m_keyframe[m_currentKeyFrame].m_type == AnimType::somersault)
+				{
+					setupSomersault();
+				}
+
+				m_title.setRotation(0);
 			}
 			else
 			{
@@ -90,6 +97,17 @@ void AnimateLicense::render(sf::RenderWindow & window)
 	window.draw(m_sub);
 }
 
+void AnimateLicense::setupSomersault()
+{
+	m_keyframe[m_currentKeyFrame].grav *= m_title.getLocalBounds().height;
+
+	float temp = m_keyframe[m_currentKeyFrame].m_targetPositionTitle.x - m_keyframe[m_currentKeyFrame].m_startPositionTitle.x;
+	float temp2 = m_keyframe[m_currentKeyFrame].m_duration.asSeconds() * cos(m_keyframe[m_currentKeyFrame].angle * acos(-1.0f) / 180.0);
+	m_keyframe[m_currentKeyFrame].initialVelocity = temp / temp2;
+
+	m_keyframe[m_currentKeyFrame].vel = sf::Vector2f(0.0f, m_keyframe[m_currentKeyFrame].initialVelocity * sin(m_keyframe[m_currentKeyFrame].angle * acos(-1.0f) / 180.0));
+}
+
 void AnimateLicense::setKeyframe(int key, sf::Time dur, sf::Vector2f tPos, sf::Vector2f sPos, AnimType type)
 {
 	m_keyframe[key].m_duration = dur;
@@ -97,12 +115,6 @@ void AnimateLicense::setKeyframe(int key, sf::Time dur, sf::Vector2f tPos, sf::V
 	m_keyframe[key].m_targetPositionTitle = tPos;
 	m_keyframe[key].m_targetPositionSub = sPos;
 	m_keyframe[key].m_type = type;
-
-	if (type == AnimType::somersault)
-	{
-		float temp = m_keyframe[key].height * m_keyframe[key].grav * 2;
-		m_keyframe[key].InitialVelocity = sqrt(temp);
-	}
 }
 
 bool AnimateLicense::isPaused()
@@ -134,8 +146,9 @@ void AnimateLicense::somersault(sf::Time t)
 
 	m_titlePosition += moveTitle;
 	m_subPosition += moveSub;
-	
-	float temp = m_keyframe[m_currentKeyFrame].InitialVelocity * m_keyframe[m_currentKeyFrame].m_timePassed.asSeconds();
-	temp += m_keyframe[m_currentKeyFrame].grav / 2 * m_keyframe[m_currentKeyFrame].m_timePassed.asSeconds() * m_keyframe[m_currentKeyFrame].m_timePassed.asSeconds();
-	m_titlePosition.y = m_keyframe[m_currentKeyFrame].m_startPositionTitle.y - temp;
+
+	m_title.rotate(360.0f / scaler);
+
+	m_keyframe[m_currentKeyFrame].vel = m_keyframe[m_currentKeyFrame].vel + m_keyframe[m_currentKeyFrame].grav * t.asSeconds();
+	m_titlePosition += m_keyframe[m_currentKeyFrame].vel*t.asSeconds() + (m_keyframe[m_currentKeyFrame].grav*(t.asSeconds() * t.asSeconds()) * 0.5f);
 }

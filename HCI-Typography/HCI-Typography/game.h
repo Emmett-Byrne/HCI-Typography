@@ -8,6 +8,7 @@
 #include "AnimateAuthor.h"
 #include "AnimateLicense.h"
 #include "AnimateProducer.h"
+#include "AnimateSplash.h"
 
 class Game
 {
@@ -31,6 +32,7 @@ private:
 	AnimateAuthor m_author;
 	AnimateLicense m_license;
 	AnimateProducer m_producer;
+	AnimateSplash m_splash;
 
 
 	sf::RenderWindow m_window; // main SFML window
