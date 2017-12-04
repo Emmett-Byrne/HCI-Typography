@@ -19,6 +19,9 @@ struct KeyFrameLicense
 	sf::Vector2f m_startPositionSub; //The starting position of the subText for the keyframe
 	sf::Vector2f m_targetPositionSub; //The end position of the subText for the keyframe
 	AnimType m_type = AnimType::move; //The type of animation
+	float grav = 9.8;
+	float InitialVelocity = 0;
+	float height = 50;
 };
 
 class AnimateLicense

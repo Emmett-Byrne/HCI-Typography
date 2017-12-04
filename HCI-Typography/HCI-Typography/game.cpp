@@ -10,7 +10,8 @@ Game::Game() :
 	m_window{ sf::VideoMode{ 800, 600, 32 }, "Typography Animation" },
 	m_exitGame{false}, //when true game will exit
 	m_author{ sf::Vector2f{ 900, 270 }, sf::Vector2f{ -100, 320 } },
-	m_license{ sf::Vector2f{ 900, 270 }, sf::Vector2f{ -100, 320 } }
+	m_license{ sf::Vector2f{ 900, 270 }, sf::Vector2f{ -100, 320 } },
+	m_producer{ sf::Vector2f{ 400, 700 }, sf::Vector2f{ 400, -100 } }
 {
 	m_author.setKeyframe(0, sf::seconds(.5f), sf::Vector2f(450, 270), sf::Vector2f(350, 320));
 	m_author.setKeyframe(1, sf::seconds(2.0f), sf::Vector2f(350, 270), sf::Vector2f(450, 320));
@@ -20,6 +21,18 @@ Game::Game() :
 	m_license.setKeyframe(1, sf::seconds( .5f ), sf::Vector2f( 500, 270 ), sf::Vector2f( 400, 320 ), AnimType::move);
 	m_license.setKeyframe(2, sf::seconds( 1.0f ), sf::Vector2f( 400, 270 ), sf::Vector2f( 400, 320 ), AnimType::somersault);
 	m_license.setKeyframe(3, sf::seconds( .5f ), sf::Vector2f(-100, 270), sf::Vector2f(900, 320), AnimType::move);
+
+	m_producer.setKeyframe(0, sf::seconds(.5f), sf::Vector2f(400, 320), sf::Vector2f(400, 270));
+	m_producer.setKeyframe(1, sf::seconds(.5f), sf::Vector2f(400, 320), sf::Vector2f(400, 270));
+	m_producer.setKeyframe(2, sf::seconds(.5f), sf::Vector2f(250, 320), sf::Vector2f(400, 270));
+	m_producer.setKeyframe(3, sf::seconds(.5f), sf::Vector2f(250, 320), sf::Vector2f(400, 270));
+	m_producer.setKeyframe(4, sf::seconds(.5f), sf::Vector2f(250, 220), sf::Vector2f(400, 270));
+	m_producer.setKeyframe(5, sf::seconds(.5f), sf::Vector2f(250, 220), sf::Vector2f(400, 270));
+	m_producer.setKeyframe(6, sf::seconds(.5f), sf::Vector2f(400, 220), sf::Vector2f(400, 270));
+	m_producer.setKeyframe(7, sf::seconds(.5f), sf::Vector2f(400, 220), sf::Vector2f(400, 270));
+	m_producer.setKeyframe(8, sf::seconds(.5f), sf::Vector2f(400, 270), sf::Vector2f(400, 320));
+	m_producer.setKeyframe(9, sf::seconds(.5f), sf::Vector2f(400, 270), sf::Vector2f(400, 320));
+	m_producer.setKeyframe(10, sf::seconds(.5f), sf::Vector2f(400, -100), sf::Vector2f(400, 700));
 
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
@@ -84,7 +97,7 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 
-	m_license.update(t_deltaTime);
+	m_producer.update(t_deltaTime);
 }
 
 /// <summary>
@@ -93,7 +106,7 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::Black);
-	m_license.render(m_window);
+	m_producer.render(m_window);
 	m_window.display();
 }
 

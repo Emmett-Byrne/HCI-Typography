@@ -1,6 +1,7 @@
 // author Emmett Byrne
 // date 28-11-17
 #include "AnimateLicense.h"
+#include <math.h>
 
 
 
@@ -44,9 +45,16 @@ void AnimateLicense::update(sf::Time t)
 	{
 		if (m_keyframe[m_currentKeyFrame].m_timePassed < m_keyframe[m_currentKeyFrame].m_duration)
 		{
-			move(t);
-
 			m_keyframe[m_currentKeyFrame].m_timePassed += t;
+
+			if (m_keyframe[m_currentKeyFrame].m_type == AnimType::move)
+			{
+				move(t);
+			}
+			if (m_keyframe[m_currentKeyFrame].m_type == AnimType::somersault)
+			{
+				somersault(t);
+			}
 		}
 		else
 		{
@@ -89,6 +97,12 @@ void AnimateLicense::setKeyframe(int key, sf::Time dur, sf::Vector2f tPos, sf::V
 	m_keyframe[key].m_targetPositionTitle = tPos;
 	m_keyframe[key].m_targetPositionSub = sPos;
 	m_keyframe[key].m_type = type;
+
+	if (type == AnimType::somersault)
+	{
+		float temp = m_keyframe[key].height * m_keyframe[key].grav * 2;
+		m_keyframe[key].InitialVelocity = sqrt(temp);
+	}
 }
 
 bool AnimateLicense::isPaused()
@@ -111,4 +125,17 @@ void AnimateLicense::move(sf::Time t)
 
 void AnimateLicense::somersault(sf::Time t)
 {
+	sf::Vector2f moveTitle(m_keyframe[m_currentKeyFrame].m_targetPositionTitle - m_keyframe[m_currentKeyFrame].m_startPositionTitle);
+	sf::Vector2f moveSub(m_keyframe[m_currentKeyFrame].m_targetPositionSub - m_keyframe[m_currentKeyFrame].m_startPositionSub);
+
+	float scaler = m_keyframe[m_currentKeyFrame].m_duration.asSeconds() / t.asSeconds();
+	moveTitle /= scaler;
+	moveSub /= scaler;
+
+	m_titlePosition += moveTitle;
+	m_subPosition += moveSub;
+	
+	float temp = m_keyframe[m_currentKeyFrame].InitialVelocity * m_keyframe[m_currentKeyFrame].m_timePassed.asSeconds();
+	temp += m_keyframe[m_currentKeyFrame].grav / 2 * m_keyframe[m_currentKeyFrame].m_timePassed.asSeconds() * m_keyframe[m_currentKeyFrame].m_timePassed.asSeconds();
+	m_titlePosition.y = m_keyframe[m_currentKeyFrame].m_startPositionTitle.y - temp;
 }
