@@ -13,6 +13,11 @@ Game::Game() :
 	m_license{ sf::Vector2f{ 900, 270 }, sf::Vector2f{ -100, 320 } },
 	m_producer{ sf::Vector2f{ 400, 700 }, sf::Vector2f{ 400, -100 } }
 {
+	if (!LevelLoader::load(1, m_creditsData))
+	{
+		return;
+	}
+
 	m_author.setKeyframe(0, sf::seconds(.5f), sf::Vector2f(450, 270), sf::Vector2f(350, 320));
 	m_author.setKeyframe(1, sf::seconds(2.0f), sf::Vector2f(350, 270), sf::Vector2f(450, 320));
 	m_author.setKeyframe(2, sf::seconds(.5f), sf::Vector2f(-100, 270), sf::Vector2f(900, 320));
@@ -33,9 +38,6 @@ Game::Game() :
 	m_producer.setKeyframe(8, sf::seconds(.5f), sf::Vector2f(400, 270), sf::Vector2f(400, 320));
 	m_producer.setKeyframe(9, sf::seconds(.5f), sf::Vector2f(400, 270), sf::Vector2f(400, 320));
 	m_producer.setKeyframe(10, sf::seconds(.5f), sf::Vector2f(400, -100), sf::Vector2f(400, 700));
-
-	setupFontAndText(); // load font 
-	setupSprite(); // load texture
 }
 
 
@@ -108,38 +110,4 @@ void Game::render()
 	m_window.clear(sf::Color::Black);
 	m_splash.render(m_window);
 	m_window.display();
-}
-
-/// <summary>
-/// load the font and setup the text message for screen
-/// </summary>
-void Game::setupFontAndText()
-{
-	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
-	{
-		std::cout << "problem loading arial black font" << std::endl;
-	}
-	m_welcomeMessage.setFont(m_ArialBlackfont);
-	m_welcomeMessage.setString("SFML Game");
-	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
-	m_welcomeMessage.setPosition(40.0f, 40.0f);
-	m_welcomeMessage.setCharacterSize(80);
-	m_welcomeMessage.setOutlineColor(sf::Color::Red);
-	m_welcomeMessage.setFillColor(sf::Color::Black);
-	m_welcomeMessage.setOutlineThickness(3.0f);
-
-}
-
-/// <summary>
-/// load the texture and setup the sprite for the logo
-/// </summary>
-void Game::setupSprite()
-{
-	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
-	{
-		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
-	}
-	m_logoSprite.setTexture(m_logoTexture);
-	m_logoSprite.setPosition(300.0f, 180.0f);
 }

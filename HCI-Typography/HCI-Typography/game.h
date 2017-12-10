@@ -9,6 +9,8 @@
 #include "AnimateLicense.h"
 #include "AnimateProducer.h"
 #include "AnimateSplash.h"
+#include "AnimateCredits.h"
+#include "LevelLoader.h"
 
 class Game
 {
@@ -25,21 +27,16 @@ private:
 	void processEvents();
 	void update(sf::Time t_deltaTime);
 	void render();
-	
-	void setupFontAndText();
-	void setupSprite();
 
 	AnimateAuthor m_author;
 	AnimateLicense m_license;
 	AnimateProducer m_producer;
 	AnimateSplash m_splash;
+	AnimateCredits m_credits;
 
+	LevelData m_creditsData;
 
 	sf::RenderWindow m_window; // main SFML window
-	sf::Font m_ArialBlackfont; // font used by message
-	sf::Text m_welcomeMessage; // text used for message on screen
-	sf::Texture m_logoTexture; // texture used for sfml logo
-	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
 
 };
